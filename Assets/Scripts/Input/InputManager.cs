@@ -5,18 +5,17 @@ namespace ShootEmUp
     public sealed class InputManager : MonoBehaviour
     {
         public float HorizontalDirection { get; private set; }
+        public bool IsFireRequired { get; private set; }
 
-        [SerializeField]
-        private GameObject character;
-
-        [SerializeField]
-        private CharacterController characterController;
+        //[SerializeField] private GameObject character;
+        //[SerializeField] private CharacterController characterController;
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                characterController._fireRequired = true;
+                this.IsFireRequired = true;
+                //characterController._fireRequired = true; 
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -32,10 +31,15 @@ namespace ShootEmUp
                 this.HorizontalDirection = 0;
             }
         }
-        
-        private void FixedUpdate()
+
+        public void ConsumeFire()
         {
-            this.character.GetComponent<MoveComponent>().MoveByRigidbodyVelocity(new Vector2(this.HorizontalDirection, 0) * Time.fixedDeltaTime);
+            this.IsFireRequired = false;
         }
+
+        //private void FixedUpdate()
+        //{
+        //    this.character.GetComponent<MoveComponent>().MoveByRigidbodyVelocity(new Vector2(this.HorizontalDirection, 0) * Time.fixedDeltaTime);
+        //}
     }
 }
